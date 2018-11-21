@@ -11,7 +11,7 @@ let pool = new pg.Pool({
 	host:'localhost',
 	port: 5432
 });
-
+/*
 pool.connect((err, db, done) =>{
 	if(err){
 		return console.log("pooja "+ err);
@@ -42,7 +42,7 @@ pool.connect((err, db, done) =>{
 		})
 	}
 });
-
+*/
 
 let app = express();
 
@@ -57,6 +57,43 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+
+
+
+app.post('/api/new-table', function(req, res){
+	let tableid = req.body.tableid;
+	let devicetype = req.body.devicetype;
+	let c0r0 = req.body.c0r0;
+	let c0r1 = req.body.c0r1;
+	let c0r2 = req.body.c0r2;
+	let c1r0 = req.body.c1r0;
+	let c1r1 = req.body.c1r1;
+	let c1r2 = req.body.c1r2;
+	let c2r0 = req.body.c2r0;
+	let c2r1 = req.body.c2r1;
+	let c2r2 = req.body.c2r2;
+pool.connect((err, db, done) =>{
+	if(err){
+		return console.log("pooja post"+ err);
+	}
+	else {
+		
+		db.query('INSERT INTO DeviceTable (tableid,devicetype,c0r0,c0r1,c0r2,c1r0,c1r1,c1r2,c2r0,c2r1,c2r2) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)', [tableid,devicetype,c0r0,c0r1,c0r2,c1r0,c1r1,c1r2,c2r0,c2r1,c2r2], (err, table) => {
+		//db.query('SELECT * FROM  country', (err, table) => {
+			if(err)
+			{
+				return res.status(400).send(err);
+			}
+			else
+			{
+				console.log("DATA INSETED!!");
+				db.end();
+			}
+		})
+	}
+});
+
+})
 
 
 app.listen(PORT, ()=> console.log('listening **** Port#' + PORT));
