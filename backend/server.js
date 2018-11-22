@@ -72,13 +72,14 @@ app.post('/api/new-table', function(req, res){
 	let c2r0 = req.body.c2r0;
 	let c2r1 = req.body.c2r1;
 	let c2r2 = req.body.c2r2;
+	console.log(req.body.tableid);
 pool.connect((err, db, done) =>{
 	if(err){
 		return console.log("pooja post"+ err);
 	}
 	else {
 		
-		db.query('INSERT INTO DeviceTable (tableid,devicetype,c0r0,c0r1,c0r2,c1r0,c1r1,c1r2,c2r0,c2r1,c2r2) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)', [tableid,devicetype,c0r0,c0r1,c0r2,c1r0,c1r1,c1r2,c2r0,c2r1,c2r2], (err, table) => {
+		db.query('INSERT INTO DeviceTable (tableid,devicetype,c1r0,c1r1,c1r2,c2r0,c2r1,c2r2,c0r0,c0r1,c0r2) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)', [tableid,devicetype,c1r0,c1r1,c1r2,c2r0,c2r1,c2r2,c0r0,c0r1,c0r2], (err, table) => {
 		//db.query('SELECT * FROM  country', (err, table) => {
 			if(err)
 			{
