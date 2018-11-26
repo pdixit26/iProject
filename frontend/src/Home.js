@@ -1,16 +1,24 @@
 import React, { Component } from "react";
 import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap';
 import ModalComponent from './ModalComponent';
-import {Button, Table} from 'reactstrap';
+import {Button} from 'reactstrap';
+import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import 'react-bootstrap-table/css/react-bootstrap-table.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
- 
+let textStyle = {
+	color:'#3A003A',
+	face:'verdana'
+}
+
 class Home extends Component {
  constructor()
   {
     super();
     this.state = {
-    	tableid:'pooja',
-    	devicetype:'dixit',
+    	tableid:'',
+    	devicetype:'',
     	c0r0:'',
     	c0r1:'',
     	c0r2:'',
@@ -21,21 +29,19 @@ class Home extends Component {
     	c2r1:'',
     	c2r2:'',
     	show:false,
+    	message:'',
       data: []
     }
   }
 
-  handleChangeValue = e => {
-  	this.setState({tableid:e.target.value, devicetype:e.target.type});
-  	console.log(e.target.value);
-  }
-  
   componentDidMount(){
   	console.log("component Mounted");
   }
 
   addTable(event){
     event.preventDefault();
+    let that = this;
+    
     let data = {
     	tableid: this.state.tableid,
     	devicetype: this.state.devicetype,
@@ -58,12 +64,16 @@ class Home extends Component {
 	
     fetch(request)
     .then(function(response){
-      response.json()
+    response.json()
       .then(function(data){
-        if (data.code === '23505')
-        	console.log("table with same name exists");
+        if (data.code === '23505'){
+        	that.setState({message:'Table with this name exits. Please select another name.'});
+        }
         else if(data.code === '22P02')
-        	console.log("Either table is empty OR not filled with desired data type");
+        	that.setState({message:'Either one or more cells are empty OR has an invalid value.'});
+        else if (data.status === 'OK') {
+        	that.setState({message:'Data Inserted Successfully'});
+        }
         
         console.log(data);
 
@@ -76,6 +86,7 @@ class Home extends Component {
     })
 
   }
+
 showModal = () => {
 	this.setState({
 		...this.state,
@@ -146,12 +157,64 @@ handleChangeDeviceType = event => {
   }
 
 
-saveData(){
-	console.log("data saved");
+saveTable(){
+  console.log(this.state.c0r0);
+  console.log(this.state.c1r0);
+  console.log(this.state.c2r0);
+    	
+
 }
 
 
+onAfterSaveCell(row, cellName, cellValue)
+{
+	 //alert(`Save cell ${cellName} with value ${cellValue}`);
+
+  let rowStr = '';
+  for (const prop in row) {
+    rowStr += prop + '+' + row[prop] + '+';
+  }
+  this.updateTableData(rowStr);
+}
+
+
+updateTableData(rowStr){
+
+	let words = rowStr.split('+')
+	let i = 1;
+		if(words[i]==='1')
+		{
+			this.setState({
+   		c0r0:words[i+2],
+   		c1r0:words[i+4],
+   		c2r0:words[i+6] });
+		}
+		else if(words[i]==='2')
+		{
+			this.setState({
+   		c0r1:words[i+2],
+   		c1r1:words[i+4],
+   		c2r1:words[i+6] });
+		}
+	    else if(words[i]==='3')
+		{this.setState({
+   		c0r2:words[i+2],
+   		c1r2:words[i+4],
+   		c2r2:words[i+6] });
+      }
+	
+}
   render() {
+  	var data = [
+  {id: 1, nunit: this.state.c0r0, price: this.state.c1r0, mfg: this.state.c2r0 },
+  {id: 2, nunit: this.state.c0r1, price: this.state.c1r1, mfg: this.state.c2r1},
+  {id: 3, nunit: this.state.c0r2, price: this.state.c1r2, mfg: this.state.c2r2}
+];
+ 
+ const cellEditProp = {
+      mode: 'click', // 'dbclick' for trigger by double-click
+      afterSaveCell: this.onAfterSaveCell.bind(this)
+    }
   	    
     return (
       <div>
@@ -164,42 +227,33 @@ saveData(){
         <label>Device Type: </label>
        <label> {this.state.devicetype}</label>
         <br/>
-        <Table striped>
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Price</th>
-            <th>Number of Unit</th>
-            <th>Manufactor Year</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>{this.state.c0r0}</td>
-            <td>{this.state.c1r0}</td>
-            <td>{this.state.c2r0}</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-             <td>{this.state.c0r1}</td>
-            <td>{this.state.c1r1}</td>
-            <td>{this.state.c2r1}</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-             <td>{this.state.c0r2}</td>
-            <td>{this.state.c1r2}</td>
-            <td>{this.state.c2r2}</td>
-          </tr>
-        </tbody>
-      </Table>
+        <BootstrapTable striped data={data}
+                        cellEdit={cellEditProp}
+        >
+          <TableHeaderColumn isKey dataField='id'
+          >
+            #
+          </TableHeaderColumn>
+          <TableHeaderColumn dataField='nunit'
+          >
+           # of Unit
+          </TableHeaderColumn>
+          <TableHeaderColumn dataField='price'
+          >
+            Price 
+          </TableHeaderColumn>
+            <TableHeaderColumn dataField='mfg'
+          >
+            Manufacture Year  
+          </TableHeaderColumn>
+        </BootstrapTable>
        <br/>
        <br/>
        <Button color="success" onClick={this.addTable.bind(this)}> Save Table </Button>
-       </form>
-     
 
+       </form>
+       <br/>
+        <h4 style={textStyle}>{this.state.message}</h4>
  
        </div>
 

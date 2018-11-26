@@ -88,6 +88,7 @@ pool.connect((err, db, done) =>{
 			else
 			{
 				console.log("DATA INSETED!!");
+				return res.status(201).send({status:'OK'});
 				db.end();
 			}
 		})
