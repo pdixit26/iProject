@@ -9,7 +9,7 @@ class Table1 extends Component {
   render() {
     const cellEditProp = {
       mode: 'click', // 'dbclick' for trigger by double-click
-      
+      afterSaveCell: this.onAfterSaveCell
     }
     return (
       <div>
