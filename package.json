@@ -13,10 +13,12 @@
   },
   "devDependencies": {},
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "backend": "cd backend && node server.js",
-    "frontend": "cd frontend && npm start",
-    "start": "concurrently --kill-others \"npm run backend\" \"npm run frontend\""
+    "build": "concurrently \"cd backend && yarn build\" \"cd frontend && yarn build\"",
+    "clean": "concurrently \"rimraf node_modules\" \"cd backend && rimraf node_modules build\" \"cd frontend && rimraf node_modules build\"",
+    "heroku-postbuild": "yarn build",
+    "install": "(cd backend && yarn) && (cd frontend && yarn)",
+    "start": "concurrently \"cd backend && PORT=3000 yarn start\" \"cd frontend && PORT=3001 yarn start\"",
+    "start:prod": "cd frontend && yarn start:prod"
   },
   "repository": {
     "type": "git",
