@@ -17,7 +17,7 @@
     "clean": "concurrently \"rimraf node_modules\" \"cd backend && rimraf node_modules build\" \"cd frontend && rimraf node_modules build\"",
     "heroku-postbuild": "yarn build",
     "install": "(cd backend && yarn) && (cd frontend && yarn)",
-    "start": "concurrently \"cd backend && PORT=3000 yarn start\" \"cd frontend && PORT=3001 yarn start\"",
+    "start": "concurrently \"cd backend && yarn start\" \"cd frontend && yarn start\"",
     "start:prod": "cd frontend && yarn start:prod"
   },
   "repository": {
