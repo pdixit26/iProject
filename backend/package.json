@@ -1,7 +1,8 @@
 {
-  "requires": true,
-  "lockfileVersion": 1,
-  "dependencies": {
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "server.js",
+    "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "morgan": "^1.9.1",
@@ -11,9 +12,6 @@
   "scripts": {
     "start": "node server.js"
   },
-  "name": "backend",
-  "version": "1.0.0",
-  "main": "server.js",
   "devDependencies": {},
   "author": "",
   "license": "ISC",

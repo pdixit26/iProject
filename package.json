@@ -13,13 +13,11 @@
   },
   "devDependencies": {},
   "scripts": {
-    "build": "concurrently \"cd backend && yarn build\" \"cd frontend && yarn build\"",
+    "build": "concurrently \"cd backend && npm start\" \"cd frontend && npm start\"",
     "clean": "concurrently \"rimraf node_modules\" \"cd backend && rimraf node_modules build\" \"cd frontend && rimraf node_modules build\"",
-    "heroku-postbuild": "yarn build",
-    "install": "(cd backend && yarn) && (cd frontend && yarn)",
-    "start": "concurrently \"cd backend && yarn start\" \"cd frontend && yarn start\"",
-    "start:prod": "cd frontend && yarn start:prod"
-  },
+    "heroku-postbuild": "npm run build",
+    "start": "concurrently \"cd backend && npm start\" \"cd frontend && npm start\"",
+    },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/pdixit26/iProject.git"

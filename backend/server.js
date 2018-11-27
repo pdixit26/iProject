@@ -5,11 +5,12 @@ let pg = require('pg');
 const PORT = 3000; 
 
 let pool = new pg.Pool({
-	user:'pdixit',
-	database: 'countries',
-	password: '123456',
-	host:'localhost',
-	port: 5432
+	user:'gnqjtcrzjtfwqd',
+	database: 'd25knk4v6tpvja',
+	password: '0ff51153df38137a800d7dc3980aa0d5c82a16b671a8991d83eed7d17ba5afa4',
+	host:'ec2-54-197-234-33.compute-1.amazonaws.com',
+	port: 5432,
+	URI:'postgres://gnqjtcrzjtfwqd:0ff51153df38137a800d7dc3980aa0d5c82a16b671a8991d83eed7d17ba5afa4@ec2-54-197-234-33.compute-1.amazonaws.com:5432/d25knk4v6tpvja'
 });
 /*
 pool.connect((err, db, done) =>{
