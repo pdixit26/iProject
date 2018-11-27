@@ -3,7 +3,7 @@ let bodyParser = require('body-parser');
 let morgan = require('morgan');
 let pg = require('pg');
 const PORT = 3000; 
-
+const HOST = '0.0.0.0';
 let pool = new pg.Pool({
 	user:'gnqjtcrzjtfwqd',
 	database: 'd25knk4v6tpvja',
@@ -99,4 +99,4 @@ pool.connect((err, db, done) =>{
 })
 
 
-app.listen(process.env.PORT || PORT, ()=> console.log('listening **** Port#' + PORT));
+app.listen(process.env.PORT || PORT, HOST, ()=> console.log('listening **** Port#' + PORT));
