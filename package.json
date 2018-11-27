@@ -1,0 +1,32 @@
+{
+  "name": "iProject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "bootstrap": "^4.1.3",
+    "concurrently": "^4.1.0",
+    "react": "^16.6.3",
+    "react-bootstrap-modal": "^4.2.0",
+    "react-dom": "^16.6.3",
+    "reactstrap": "^6.5.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "backend": "cd backend && node server.js",
+    "frontend": "cd frontend && npm start",
+    "start": "concurrently --kill-others \"npm run backend\" \"npm run frontend\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pdixit26/iProject.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pdixit26/iProject/issues"
+  },
+  "homepage": "https://github.com/pdixit26/iProject#readme"
+}
